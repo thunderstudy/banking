@@ -260,12 +260,11 @@
     font-family:'Syne',sans-serif; font-size:0.78rem; font-weight:700;
     flex-shrink:0;
   }
-  .ch-info { flex:1; min-width:0; }
+  .ch-info { flex:1; min-width:0; display:flex; align-items:center; }
   .ch-name {
     font-size:0.88rem; font-weight:500; color:var(--text);
     line-height:1.3;
   }
-  .ch-views { font-size:0.72rem; color:var(--muted); margin-top:2px; }
   .ch-action {
     width:28px; height:28px; border-radius:8px;
     background: rgba(96,165,250,0.12);
@@ -301,7 +300,6 @@
   </div>
 </header>
 
-<!-- SCREEN 1: SUBJECTS -->
 <div class="screen active" id="subjectScreen">
   <div class="page-headline">Study Notes</div>
   <div class="page-sub">IBPS PO 2025 — All Subjects</div>
@@ -325,7 +323,6 @@
   <div class="subject-grid" id="subjectGrid"></div>
 </div>
 
-<!-- SCREEN 2: CHAPTERS -->
 <div class="screen" id="chapterScreen">
   <div class="chapter-hero" id="chapterHero">
     <div class="chapter-hero-title" id="heroTitle">Subject</div>
@@ -342,11 +339,11 @@
 </div>
 
 <script>
-const BASE = 'https://thunderstudy.github.io/ibps_op/notes';
+const BASE = 'https://thunderstudy.github.io/ibps_po_notes';
 
 const subjects = [
   {
-    id:'aptitude', name:'Aptitude', slug:'aptitude',
+    id:'aptitude', name:'Aptitude', slug:'Aptitude',
     color:'#F97316', bg:'rgba(249,115,22,0.12)',
     icon:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
     accent:'#F97316',
@@ -357,11 +354,10 @@ const subjects = [
       'Permutation & Combination','Probability','Profit and Loss',
       'Quadratic Equations','Ratio and Proportion','Number Series',
       'Series','Simple Interest','Time and Distance','Time and Work'
-    ],
-    views:[4220,1640,1430,2270,1130,861,976,616,662,1210,549,536,736,941,902,1160,813,695,859,1140]
+    ]
   },
   {
-    id:'reasoning', name:'Reasoning', slug:'reasoning',
+    id:'reasoning', name:'Reasoning', slug:'Reasoning',
     color:'#3B82F6', bg:'rgba(59,130,246,0.12)',
     icon:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`,
     accent:'#3B82F6',
@@ -369,11 +365,10 @@ const subjects = [
       'Computer Data Representation','Coding - Decoding','Distance and Direction Test',
       'Blood Relations','Input-Output','Data Sufficiency',
       'Inequality','Seating Arrangement','Syllogism','Puzzles','Logical Reasoning'
-    ],
-    views:[1910,2050,1040,1410,843,684,987,1490,1310,1530,1050]
+    ]
   },
   {
-    id:'english', name:'English Language', slug:'english',
+    id:'english', name:'English Language', slug:'English',
     color:'#EC4899', bg:'rgba(236,72,153,0.12)',
     icon:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h16"/></svg>`,
     accent:'#EC4899',
@@ -385,11 +380,10 @@ const subjects = [
       'Passage With Missing Lines','Phrase Replacement',
       'Reading Comprehension - Part - 1','Reading Comprehension - Part - 2',
       'Reading Comprehension - Part - 3','Grammatically Correct Sentences'
-    ],
-    views:[2220,941,604,591,544,665,686,499,337,369,364,337,416,487,350,787,695,699,332,338,404,752,361,333,580]
+    ]
   },
   {
-    id:'banking', name:'Banking Awareness', slug:'banking',
+    id:'banking', name:'Banking Awareness', slug:'banking_awareness_',
     color:'#0EA5E9', bg:'rgba(14,165,233,0.12)',
     icon:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
     accent:'#0EA5E9',
@@ -397,12 +391,11 @@ const subjects = [
       'Bank Functions and Risk Assessment','Structure and Financial Institutions',
       'Banking Terms','GK Static Banking - Part - 1','GK Static Banking - Part - 2',
       'GK Static Banking - Part - 3','GK Static Banking - Part - 4',
-      'Government Schemes','Macro economy & Government Budget'
-    ],
-    views:[2630,874,1080,1160,445,323,361,668,434]
+      'Government Schemes','Macro economy & Government Budget','markets','payment system and negotiable instruments','RBI'
+    ]
   },
   {
-    id:'staticgk', name:'Static GK', slug:'staticgk',
+    id:'staticgk', name:'Static GK', slug:'Static_gk',
     color:'#6B5B95', bg:'rgba(107,91,149,0.12)',
     icon:`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#6B5B95" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>`,
     accent:'#6B5B95',
@@ -425,8 +418,7 @@ const subjects = [
       'Awards and Honours','Government Industrial Undertaking',
       'National Animals of Some Countries','National Awards','Gallantry Awards',
       'Research Centres of India','Famous Musical Instruments and their Exponents'
-    ],
-    views: Array(41).fill(0).map((_,i)=>[1360,642,576,337,414,480,281,259,334,392,392,276,219,236,161,196,178,170,148,163,126,129,143,166,143,156,116,132,107,138,123,108,113,117,154,112,128,148,117,128,106][i]||150)
+    ]
   },
   {
     id:'computer', name:'Computer', slug:'computer',
@@ -439,19 +431,13 @@ const subjects = [
       'Characteristics Of Computer','Computer Hardware','Computer Software',
       'Computer Internet','Points to Remember About Computer',
       'Functions Of Important Key','Glossary Of Computer Terms','Abbreviations Of Computer'
-    ],
-    views:[1220,603,431,394,370,299,379,360,373,367,399,298,437]
+    ]
   }
 ];
 
 let currentSubject = null;
 let activeTab = 'latest';
 let favs = JSON.parse(localStorage.getItem('ibps_favs') || '{}');
-
-function formatViews(n) {
-  if(n >= 1000) return (n/1000).toFixed(2).replace(/\.?0+$/,'')+'K';
-  return n+'';
-}
 
 function renderSubjects() {
   const grid = document.getElementById('subjectGrid');
@@ -542,12 +528,11 @@ function renderChapters() {
     container.innerHTML = `<div class="chapter-list">${favItems.map((ch,_) => {
       const origIdx = s.chapters.indexOf(ch);
       const key = s.id+'_'+origIdx;
-      const url = `${BASE}/${s.slug}/${origIdx+1}.pdf`;
+      const url = `${BASE}/${s.slug}${origIdx+1}.pdf`;
       return `<a class="chapter-item" href="${url}" target="_blank">
         <div class="ch-num" style="background:${s.bg};color:${s.accent}">${origIdx+1}</div>
         <div class="ch-info">
           <div class="ch-name">${ch}</div>
-          <div class="ch-views">${formatViews(s.views[origIdx]||0)} views</div>
         </div>
         <div class="ch-action" onclick="toggleFav('${s.id}',${origIdx},event)" style="background:${favs[key]?'rgba(251,191,36,0.2)':'rgba(124,58,237,0.08)'}">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="${favs[key]?'#F59E0B':'none'}" stroke="${favs[key]?'#F59E0B':'#7C3AED'}" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
@@ -559,12 +544,11 @@ function renderChapters() {
 
   container.innerHTML = `<div class="chapter-list">${s.chapters.map((ch, i) => {
     const key = s.id+'_'+i;
-    const url = `${BASE}/${s.slug}/${i+1}.pdf`;
+    const url = `${BASE}/${s.slug}${i+1}.pdf`;
     return `<a class="chapter-item" href="${url}" target="_blank">
       <div class="ch-num" style="background:${s.bg};color:${s.accent}">${i+1}</div>
       <div class="ch-info">
         <div class="ch-name">${ch}</div>
-        <div class="ch-views">${formatViews(s.views[i]||0)} views</div>
       </div>
       <div class="ch-action" onclick="toggleFav('${s.id}',${i},event)" style="background:${favs[key]?'rgba(251,191,36,0.2)':'rgba(124,58,237,0.08)'}">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="${favs[key]?'#F59E0B':'none'}" stroke="${favs[key]?'#F59E0B':'#7C3AED'}" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
